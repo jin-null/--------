@@ -1,0 +1,161 @@
+<html>
+<head>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .flash {
+            margin: 0 auto;
+            width: 730px;
+            position: relative;
+            height: 454px;
+        }
+        .flash .img div{
+            position: absolute;
+            display: none;
+        }
+
+        .flash .img .active {
+            display: block;
+        }
+
+        .dot {
+            position: absolute;
+            bottom: 10px;
+            left: 300px;
+            z-index: 1;
+        }
+
+        .dot ul{
+            list-style: none;
+        }
+        .dot ul li {
+            cursor: pointer;
+            font-size: 12px;
+            float: left;
+            padding: 2px 5px;
+            background-color: #444;
+            color: #fff;
+            margin: 0 2px;
+            border-radius: 10px;
+        }
+
+        .dot ul li.hover {
+            background: #b61b1f;
+        }
+
+        .arrow div {
+            color: #fff;
+            background: #000;
+            width: 26px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            opacity: 0.4;
+            cursor: pointer;
+            display: none;
+        }
+        .arrow .left {
+            position: absolute;
+            left: 0;
+            top: 200px;
+        }
+        .arrow .right {
+            position: absolute;
+            right: 0;
+            top: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="flash">
+        <div class="img">
+            <div class="active"><img src="assets/img/1.jpg" alt=""></div>
+            <div><img src="assets/img/2.jpg" alt=""></div>
+            <div><img src="assets/img/3.jpg" alt=""></div>
+            <div><img src="assets/img/4.jpg" alt=""></div>
+            <div><img src="assets/img/5.jpg" alt=""></div>
+            <div><img src="assets/img/6.jpg" alt=""></div>
+        </div>
+
+        <div class="dot">
+            <ul>
+                <li class="hover">1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+            </ul>
+        </div>
+
+        <div class="arrow">
+            <div class="left"> < </div>
+            <div class="right"> > </div>
+        </div>
+
+    </div>
+
+    <script src="assets/js/jquery-2.2.0.min.js"></script>
+    <script>
+
+    //定时执行
+
+    // var id = setInterval(run, 600);
+
+
+    // clearInterval(id);
+
+
+
+
+        $(function(){
+            
+            var index = 0;
+            // 定义定时执行函数
+            var run = function(){
+                index++;
+                if(index==6) {
+                    index = 0;
+                }
+                $(".dot li").eq(index).addClass("hover").siblings().removeClass("hover");
+                $('.flash .img div').eq(index).fadeIn(600).siblings().fadeOut(600);
+            }
+            var id = setInterval(run, 3000);
+            
+
+
+            $(".flash").hover(function(){
+                $(".arrow div").show();
+            },function(){
+                $(".arrow div").hide();
+            });
+
+            //默认的index 是 0，也就是第一页
+            $(".dot li").hover(function(){
+                clearInterval(id);
+                index = $(this).index();
+                $(this).addClass("hover").siblings().removeClass("hover");
+                $('.flash .img div').eq(index).fadeIn(600).siblings().fadeOut(600);
+            },function(){
+                id = setInterval(run, 3000);
+            });
+
+            $(".arrow .right").click(function(){
+                // console.log(index);
+
+                index++;
+                if(index==6) {
+                    index = 0;
+                }
+                $(".dot li").eq(index).addClass("hover").siblings().removeClass("hover");
+                $('.flash .img div').eq(index).fadeIn(600).siblings().fadeOut(600);
+            })
+
+
+
+        });
+    </script>
+</body>
+</html>
